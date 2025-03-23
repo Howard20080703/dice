@@ -83,9 +83,41 @@
                 font-size: 20px;
             }
         }
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 999;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 999;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
     </style>
 </head>
 <body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ 全螢幕</button>
     <div class="container">
         <h1>🎲 骰子大對決 🎲</h1>
         
@@ -101,5 +133,29 @@
         <p style="margin-top: 20px; color: #7f8c8d;">自動模式：所有骰子自動擲出</p>
         <p style="color: #7f8c8d;">手動模式：玩家骰子需手動按停</p>
     </div>
+    <script>
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen?.() || 
+                document.documentElement.webkitRequestFullscreen?.();
+            } else {
+                document.exitFullscreen?.() || 
+                document.webkitExitFullscreen?.();
+            }
+        }
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+    
+        function updateFullscreenButton() {
+            const btn = document.querySelector('.fullscreen-btn');
+            if (document.fullscreenElement) {
+                btn.textContent = '⛶ 退出';
+                btn.style.backgroundColor = '#e74c3c';
+            } else {
+                btn.textContent = '⛶ 全螢幕';
+                btn.style.backgroundColor = '#2196F3';
+            }
+        }
+    </script>
 </body>
 </html>
