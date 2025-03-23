@@ -57,6 +57,29 @@
             animation: shake 0.5s infinite;
         }
 
+                /* 新增全螢幕按鈕樣式 */
+                .fullscreen-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 手機橫屏適應 */
+        @media screen and (max-width: 600px) and (orientation: landscape) {
+            .container {
+                transform: scale(0.8);
+                transform-origin: top center;
+            }
+        }
+
         @keyframes shake {
             0% { transform: rotate(0deg); }
             25% { transform: rotate(15deg); }
@@ -99,6 +122,7 @@
     </style>
 </head>
 <body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ 全螢幕</button>
     <div class="container">
         <h1 style="text-align:center;color:#333;margin-bottom:20px;">🎲 骰子大對決 🎲</h1>
         
@@ -134,6 +158,37 @@
     </div>
 
     <script>
+        // 新增全螢幕功能
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Safari
+                    document.documentElement.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { // Safari
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+
+        // 監聽全螢幕狀態變化
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton); // Safari
+
+        function updateFullscreenButton() {
+            const btn = document.querySelector('.fullscreen-btn');
+            if (document.fullscreenElement) {
+                btn.textContent = '⛶ 退出全螢幕';
+                btn.style.backgroundColor = '#f44336';
+            } else {
+                btn.textContent = '⛶ 全螢幕';
+                btn.style.backgroundColor = '#2196F3';
+            }
+        }
         let wins = 0, losses = 0, draws = 0;
 
         const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
