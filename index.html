@@ -41,16 +41,25 @@
         }
 
         .dice {
-            width: 60px;
-            height: 60px;
+            width: 80px;  /* 放大容器 */
+            height: 80px;
             background: white;
             border-radius: 10px;
             border: 2px solid #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 36px;
+            font-size: 36px;  /* 放大字體 */
             transition: transform 0.3s;
+            margin: 5px;  /* 增加間距 */
+        }
+
+        .total-score {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            color: #333;
+            font-weight: bold;
         }
 
         .rolling {
@@ -133,6 +142,7 @@
                 <div class="dice">⚁</div>
                 <div class="dice">⚂</div>
             </div>
+            <div class="total-score" id="playerTotal">總數：0</div>
         </div>
 
         <div class="player-area" style="background:#ffe6e6">
@@ -142,6 +152,7 @@
                 <div class="dice">⚁</div>
                 <div class="dice">⚂</div>
             </div>
+            <div class="total-score" id="opponentTotal">總數：0</div>
         </div>
 
         <div class="result" id="result">點擊開始遊戲！</div>
@@ -225,6 +236,10 @@
 
                 const playerSum = playerValues.reduce((a,b) => a + b, 0);
                 const opponentSum = opponentValues.reduce((a,b) => a + b, 0);
+
+                // 更新總數顯示
+                document.getElementById('playerTotal').textContent = `總數：${playerSum}`;
+                document.getElementById('opponentTotal').textContent = `總數：${opponentSum}`;
 
                 playerDice.forEach(d => d.classList.remove('rolling'));
                 opponentDice.forEach(d => d.classList.remove('rolling'));
