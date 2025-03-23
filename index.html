@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>骰子大對決 - 資二甲園遊會</title>
+    <title>骰子大對決 - 遊戲選擇</title>
     <style>
         * {
             box-sizing: border-box;
@@ -17,6 +17,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             padding: 15px;
         }
@@ -24,109 +25,49 @@
         .container {
             width: 100%;
             max-width: 800px;
-            transform: scale(0.95);
-            transform-origin: top center;
-        }
-
-        .player-area {
             background: white;
             border-radius: 20px;
-            padding: 15px;
-            margin: 10px;
+            padding: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .dice-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .dice {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 15px;
-            border: 3px solid #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-
-        .rolling {
-            animation: shake 0.5s infinite;
-        }
-
-        .total-score {
             text-align: center;
-            font-size: 24px;
-            margin: 10px 0;
-            font-weight: bold;
-            color: #2c3e50;
         }
 
-        button {
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .mode-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .mode-button {
             background: #4CAF50;
             color: white;
             border: none;
-            padding: 18px 35px;
-            border-radius: 30px;
-            font-size: 22px;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 24px;
             cursor: pointer;
-            margin: 15px;
             transition: all 0.2s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        button:active {
-            transform: scale(0.96);
-        }
-
-        .result {
-            text-align: center;
-            font-size: 28px;
-            margin: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .scoreboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px;
-            font-size: 20px;
-            text-align: center;
-        }
-
-        .fullscreen-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        .mode-button:nth-child(2) {
             background: #2196F3;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 999;
-            font-size: 18px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-            transition: all 0.3s;
         }
 
-        @keyframes shake {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(15deg) scale(1.1); }
-            50% { transform: rotate(-15deg) scale(0.9); }
-            75% { transform: rotate(10deg) scale(1.05); }
-            100% { transform: rotate(0deg) scale(1); }
+        .mode-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+        }
+
+        .dice-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
         }
 
         @media (aspect-ratio: 4/3) {
@@ -134,161 +75,31 @@
                 transform: scale(1);
                 max-width: 100%;
             }
-            
-            .dice {
-                width: 110px;
-                height: 110px;
-                font-size: 65px;
-            }
-            
-            h1 {
-                font-size: 2.8rem;
-            }
         }
 
-        @media (max-width: 1024px) {
-            .dice {
-                width: 80px;
-                height: 80px;
-                font-size: 45px;
-            }
-            
-            button {
-                padding: 15px 30px;
+        @media (max-width: 600px) {
+            .mode-button {
+                padding: 15px;
                 font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ 全螢幕</button>
-    
     <div class="container">
-        <h1 style="text-align:center;color:#2c3e50;margin:20px 0;">🎲 骰子大對決 🎲</h1>
+        <h1>🎲 骰子大對決 🎲</h1>
         
-        <div class="player-area">
-            <h2 style="color:#27ae60;">玩家</h2>
-            <div class="dice-container" id="playerDice">
-                <div class="dice">⚀</div>
-                <div class="dice">⚁</div>
-                <div class="dice">⚂</div>
-            </div>
-            <div class="total-score" id="playerTotal">總數：0</div>
+        <div class="dice-icon">⚅⚄⚃</div>
+        
+        <h2>請選擇遊戲模式</h2>
+        
+        <div class="mode-buttons">
+            <button class="mode-button" onclick="window.location.href='dice-auto.html'">自動模式</button>
+            <button class="mode-button" onclick="window.location.href='dice-notauto.html'">手動模式</button>
         </div>
-
-        <div class="player-area" style="background:#ffe6e6">
-            <h2 style="color:#e74c3c;">資二甲</h2>
-            <div class="dice-container" id="opponentDice">
-                <div class="dice">⚀</div>
-                <div class="dice">⚁</div>
-                <div class="dice">⚂</div>
-            </div>
-            <div class="total-score" id="opponentTotal">總數：0</div>
-        </div>
-
-        <div class="result" id="result">點擊開始遊戲！</div>
-
-        <div style="text-align:center">
-            <button onclick="startGame()">🎲 開始遊戲 🎲</button>
-        </div>
-
-        <div class="scoreboard">
-            <div style="color:#27ae60;">勝場: <span id="wins">0</span></div>
-            <div style="color:#e74c3c;">敗場: <span id="losses">0</span></div>
-            <div style="color:#3498db;">平手: <span id="draws">0</span></div>
-        </div>
+        
+        <p style="margin-top: 20px; color: #7f8c8d;">自動模式：所有骰子自動擲出</p>
+        <p style="color: #7f8c8d;">手動模式：玩家骰子需手動按停</p>
     </div>
-
-    <script>
-        let wins = 0, losses = 0, draws = 0;
-        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen?.() || 
-                document.documentElement.webkitRequestFullscreen?.();
-            } else {
-                document.exitFullscreen?.() || 
-                document.webkitExitFullscreen?.();
-            }
-        }
-
-        document.addEventListener('fullscreenchange', updateFullscreenButton);
-        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-
-        function updateFullscreenButton() {
-            const btn = document.querySelector('.fullscreen-btn');
-            if (document.fullscreenElement) {
-                btn.textContent = '⛶ 退出';
-                btn.style.backgroundColor = '#e74c3c';
-            } else {
-                btn.textContent = '⛶ 全螢幕';
-                btn.style.backgroundColor = '#2196F3';
-            }
-        }
-
-        function rollDice() {
-            return Array.from({length:3}, () => Math.floor(Math.random() * 6) + 1);
-        }
-
-        function updateDiceDisplay(diceElements, values) {
-            diceElements.forEach((dice, index) => {
-                dice.textContent = diceFaces[values[index] - 1];
-                dice.style.transform = `rotate(${Math.random()*360}deg) scale(1.2)`;
-                setTimeout(() => dice.style.transform = 'rotate(0deg) scale(1)', 300);
-            });
-        }
-
-        function startGame() {
-            const playerDice = [...document.querySelectorAll('#playerDice .dice')];
-            const opponentDice = [...document.querySelectorAll('#opponentDice .dice')];
-            const resultElement = document.getElementById('result');
-
-            playerDice.forEach(d => d.classList.add('rolling'));
-            opponentDice.forEach(d => d.classList.add('rolling'));
-
-            setTimeout(() => {
-                const playerValues = rollDice();
-                const opponentValues = rollDice();
-
-                updateDiceDisplay(playerDice, playerValues);
-                updateDiceDisplay(opponentDice, opponentValues);
-
-                const playerSum = playerValues.reduce((a,b) => a + b, 0);
-                const opponentSum = opponentValues.reduce((a,b) => a + b, 0);
-
-                document.getElementById('playerTotal').textContent = `總數：${playerSum}`;
-                document.getElementById('opponentTotal').textContent = `總數：${opponentSum}`;
-
-                playerDice.forEach(d => d.classList.remove('rolling'));
-                opponentDice.forEach(d => d.classList.remove('rolling'));
-
-                if(playerSum > opponentSum) {
-                    resultElement.textContent = "🎉 恭喜獲得一杯飲料！ 🎉";
-                    resultElement.style.color = "#27ae60";
-                    wins++;
-                } else if(playerSum < opponentSum) {
-                    resultElement.textContent = "😢 可惜了...再接再厲 😢";
-                    resultElement.style.color = "#e74c3c";
-                    losses++;
-                } else {
-                    resultElement.textContent = "🤝 平手！再來一次～ 🤝";
-                    resultElement.style.color = "#3498db";
-                    draws++;
-                }
-
-                document.getElementById('wins').textContent = wins;
-                document.getElementById('losses').textContent = losses;
-                document.getElementById('draws').textContent = draws;
-            }, 1000);
-        }
-
-        // iPad自動適配
-        window.addEventListener('resize', () => {
-            if (window.innerWidth / window.innerHeight === 4/3) {
-                document.querySelector('.container').style.transform = 'scale(1)';
-            }
-        });
-    </script>
 </body>
 </html>
